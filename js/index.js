@@ -139,6 +139,7 @@ d3.csv(data_dir, function(data){
 	}
 	
 	d3.selectAll('.color_bar').on('mouseover', function(d){ 
+		d3.select(this).style('fill','red');
 		name = d3.select(this).attr('id').split("_")[1];
 		d3.selectAll('.line-path#'+name)
 			.attr('stroke-width', 4)
@@ -147,11 +148,12 @@ d3.csv(data_dir, function(data){
 			.attr('r', 4)
 			.raise(); 
 	}).on('mouseout', function(d){ //如果移出的話
+		d3.select(this).style('fill','#000');
 		name = d3.select(this).attr('id').split("_")[1];
 		d3.selectAll('.line-path#'+name)
 			.attr('stroke-width', 1.5);
 		d3.selectAll('.dot#'+name)
 			.attr('r', 2.5);
-	});	
+	});
 
 });

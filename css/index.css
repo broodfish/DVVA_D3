@@ -40,3 +40,15 @@ p {
 .text {
 	font-size: 10px;
 }
+
+.line-path {
+	transition: stroke-width .2s;
+}
+
+.dot {
+	transition: r .2s;
+}
+
+.color_bar {
+	transition: fill .1s;
+}
