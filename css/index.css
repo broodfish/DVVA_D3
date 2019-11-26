@@ -1,0 +1,42 @@
+@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
+* {
+	font-family: 'Noto Sans TC', 'Righteous',  sans-serif;
+}
+
+p {
+  text-align: center;
+}
+
+.chart {
+	float: left;
+}
+
+.list {
+	float: left;
+	padding: 10px;
+	margin-top: 50px;
+}
+
+#tooltip {
+	position: absolute;
+	max-width: 220px;
+	padding: 10px;
+	background-color: #fff;
+	border-radius: 2px;
+	box-shadow: 0 2px 2px rgba(0,0,0, .16);
+	pointer-events: none;
+	transition: opacity .2s;
+	opacity: 1;
+	font-size: 11px;
+}
+#tooltip.hidden {
+	opacity: 0;
+}
+
+.colorbox {
+	width: 10px;
+	height: 10px;
+}
+.text {
+	font-size: 10px;
+}
