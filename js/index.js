@@ -15,8 +15,7 @@ var svg = d3.select(".list")
     .attr("height", "450px");
 
 var countryname = ['新北市', '宜蘭縣', '桃園市', '新竹縣', '苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣', '嘉義縣', '臺南市', '高雄市',
-           '屏東縣', '臺東縣', '花蓮縣', '澎湖縣', '基隆市', '新竹市', '臺中市', '嘉義市', '臺南市', '臺北市', '高雄市', '福建省',
-           '金門縣', '連江縣'];
+           '屏東縣', '臺東縣', '花蓮縣', '澎湖縣', '基隆市', '新竹市', '嘉義市',  '臺北市', '金門縣', '連江縣'];
 var i = 0;
 	
 d3.csv(data_dir, function(data){
@@ -42,13 +41,10 @@ d3.csv(data_dir, function(data){
 	// map "populationDiff" to color (square)
 	var color_scale = d3.scaleOrdinal()
 		.domain([country_Range[0], country_Range[1]])
-		.range(["#5E4FA2", "#3288BD", "#66C2A5", "#ABDDA4", "#E6F598", "#FFFFBF", "#FEE08B", "#FDAE61", "#F46D43", "#D53E4F", "#9E0142"]);
+		.range(["#1f77b4", "#ff7f0e", "#2ca02c", "#ABDDA4", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf",
+			"#393b79", "#8c6d31", "#843c39", "#636363", "#7b4173", "#cedb9c", "#e7969c", "#637939", "#e7cb94", "#d6616b",
+			"#9ecae1", "#de9ed6"]);
 	
-	// add plot canvas
-	d3.select(".my_canvas").append("g")
-		.attr("class", "new_canvas")
-		.attr("transform", 'translate(0,0)')
-		
 	// Add X axis
 	d3.select(".my_canvas").append("g")
 		.attr("class", "x-axis")
@@ -60,6 +56,11 @@ d3.csv(data_dir, function(data){
 		.attr("class", "y-axis")
 		.attr("transform", 'translate(' + padding.left + ',' + padding.top + ')')
 		.call(d3.axisLeft(y_scale));
+		
+	// add plot canvas
+	d3.select(".my_canvas").append("g")
+		.attr("class", "new_canvas")
+		.attr("transform", 'translate(0,0)')
 	
 	var linePath = d3.line()
                 .x(function(d){ return x_scale(d.date) })
@@ -72,7 +73,7 @@ d3.csv(data_dir, function(data){
 	}
 	
 	while (i < countryname.length){
-		d3.select(".new_canvas").append('g')
+		d3.select(".new_canvas") //線, class:line-path, id: country
 		.append('path')
 			.attr('class', 'line-path')
 			.attr('id', function(d) { return countryname[i];})
@@ -84,7 +85,7 @@ d3.csv(data_dir, function(data){
 		i += 1;
 	}
 	
-	d3.select(".new_canvas").append('g')
+	d3.select(".new_canvas") //點, class:dot, id:country
 		.selectAll('circle')
 		.data(data)
 		.enter()
@@ -108,7 +109,6 @@ d3.csv(data_dir, function(data){
 	};
 	
 	d3.selectAll('.dot').on('mouseover', function(d){ 
-	//d3 function，類似jquery，直接可以控制class
 		var x = d3.select(this).attr('transform').split("(")[1].split(",")[0];
 		var y = d3.select(this).attr('transform').split("(")[1].split(",")[1].split(")")[0];
 		var xPos = parseFloat(x) + 10; //截取點的位置
@@ -117,7 +117,7 @@ d3.csv(data_dir, function(data){
 			.style('top',yPos+'px'); //將div抓來用
 		d3.select('#tooltip')
 			.classed('hidden', false) //移除隱藏的class
-			.html(showTips(i, d)); //將剛剛的showTips function帶入
+			.html(showTips(i, d));
 	}).on('mouseout', function(d){ //如果移出的話
 		d3.select('#tooltip').classed('hidden', true); //補回剛剛的Class
 	});	
@@ -137,5 +137,21 @@ d3.csv(data_dir, function(data){
 			.attr('transform', 'translate(15,'+ (8.5+i*20) + ')')
 			.html(countryname[i]);
 	}
+	
+	d3.selectAll('.color_bar').on('mouseover', function(d){ 
+		name = d3.select(this).attr('id').split("_")[1];
+		d3.selectAll('.line-path#'+name)
+			.attr('stroke-width', 3)
+			.raise(); 
+		d3.selectAll('.dot#'+name)
+			.attr('r', 3)
+			.raise(); 
+	}).on('mouseout', function(d){ //如果移出的話
+		name = d3.select(this).attr('id').split("_")[1];
+		d3.selectAll('.line-path#'+name)
+			.attr('stroke-width', 1.5);
+		d3.selectAll('.dot#'+name)
+			.attr('r', 2.5);
+	});	
 
 });
