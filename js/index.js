@@ -104,7 +104,7 @@ d3.csv(data_dir, function(data){
 		date = d.date;
 		country = d.country;
 		pop = d.populationDiff;
-		html = html + '<div><span>縣市：'+country+'</span><br><span>時間：'+date+'年</span><br><span>人口差：'+pop+'%</span></div>'
+		html = html + '<div><span>縣市：'+country+'</span><br><span>時間：'+date+'年</span><br><span>人口差：'+d3.format('0.2f')(pop)+'%</span></div>'
 		return html; //回傳整理好的html
 	};
 	
