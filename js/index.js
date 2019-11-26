@@ -141,10 +141,10 @@ d3.csv(data_dir, function(data){
 	d3.selectAll('.color_bar').on('mouseover', function(d){ 
 		name = d3.select(this).attr('id').split("_")[1];
 		d3.selectAll('.line-path#'+name)
-			.attr('stroke-width', 3)
+			.attr('stroke-width', 4)
 			.raise(); 
 		d3.selectAll('.dot#'+name)
-			.attr('r', 3)
+			.attr('r', 4)
 			.raise(); 
 	}).on('mouseout', function(d){ //如果移出的話
 		name = d3.select(this).attr('id').split("_")[1];
