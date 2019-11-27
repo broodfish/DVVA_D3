@@ -11,7 +11,7 @@ var svg = d3.select(".chart")
 var svg = d3.select(".list")
 	.append("svg")
   	.attr("class", "color_legend")
-    .attr("width", "300px")
+    .attr("width", "70px")
     .attr("height", "450px");
 
 var countryname = ['新北市', '宜蘭縣', '桃園市', '新竹縣', '苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣', '嘉義縣', '臺南市', '高雄市',
@@ -122,8 +122,9 @@ d3.csv(data_dir, function(data){
 		d3.select('#tooltip').classed('hidden', true); //補回剛剛的Class
 	});	
 	
-	for (i = 0; i < countryname.length; i++){
-		d3.select(".color_legend")
+	for (i = 0; i < countryname.length; i++){ //colo legend
+		d3.select(".color_legend") //顏色方塊
+			.attr('overflow','visible')
 			.append("svg")
 			.attr('class', 'color_bar')
 			.attr('id', 'color_'+countryname[i])
@@ -131,16 +132,22 @@ d3.csv(data_dir, function(data){
 				.attr('class', 'colorbox')
 				.attr('transform', 'translate(0,'+ i*20 + ')')
 				.style("fill", function(d) { return color_scale(countryname[i]);});
-		d3.select('#color_'+countryname[i])
+		d3.select('#color_'+countryname[i]) //文字
 			.append("text")
 			.attr('class', 'text')
 			.attr('transform', 'translate(15,'+ (8.5+i*20) + ')')
 			.html(countryname[i]);
+		d3.select('#color_'+countryname[i]) //checkbox
+			.append("circle")
+			.attr("class", "checkbox")
+			.attr("r", "5px")
+			.attr('transform', 'translate(60,'+ (5 + i*20) + ')');
 	}
 	
 	d3.selectAll('.color_bar').on('mouseover', function(d){ 
-		d3.select(this).style('fill','red');
+		id = d3.select(this).attr('id')
 		name = d3.select(this).attr('id').split("_")[1];
+		d3.select('#'+id+' .text').attr('fill','red');
 		d3.selectAll('.line-path#'+name)
 			.attr('stroke-width', 4)
 			.raise(); 
@@ -148,12 +155,19 @@ d3.csv(data_dir, function(data){
 			.attr('r', 4)
 			.raise(); 
 	}).on('mouseout', function(d){ //如果移出的話
-		d3.select(this).style('fill','#000');
+		d3.select('#'+id+' .text').attr('fill','#000');
 		name = d3.select(this).attr('id').split("_")[1];
 		d3.selectAll('.line-path#'+name)
 			.attr('stroke-width', 1.5);
 		d3.selectAll('.dot#'+name)
 			.attr('r', 2.5);
+	});
+	
+	d3.selectAll('.checkbox').on('click', function(d){
+		if (d3.select(this).classed("checked") == false)
+			d3.select(this).classed("checked", true);
+		else
+			d3.select(this).classed("checked", false);
 	});
 
 });

@@ -37,8 +37,15 @@ p {
 	width: 10px;
 	height: 10px;
 }
+
 .text {
-	font-size: 10px;
+	font-size: 11px;
+	transition: fill .1s;
+}
+
+.checkbox {
+	width: 10px;
+	height: 10px;
 }
 
 .line-path {
@@ -50,5 +57,13 @@ p {
 }
 
 .color_bar {
-	transition: fill .1s;
+	padding: 5px;
+}
+
+.checkbox {
+	fill: black;
+}
+
+.checkbox.checked{
+	fill: grey;
 }
