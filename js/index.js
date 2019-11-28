@@ -112,7 +112,20 @@ d3.csv(data_dir, function(data){
 		return html; //回傳整理好的html
 	};
 	
-	d3.selectAll('.dot').on('mouseover', function(d){ 
+	d3.selectAll('.line-path').on('mouseover', function(d){  // 線的tooltips
+		var xPos = d3.mouse(this)[0] + 70; //截取滑鼠的位置
+		var yPos = d3.mouse(this)[1] + 10;
+		name = d3.select(this).attr('id');
+		d3.select('#tooltip').style('left',xPos+'px')
+			.style('top',yPos+'px'); //將div抓來用
+		d3.select('#tooltip')
+			.classed('hidden', false) //移除隱藏的class
+			.html(name);
+	}).on('mouseout', function(d){ //如果移出的話
+		d3.select('#tooltip').classed('hidden', true); //補回剛剛的Class
+	});
+	
+	d3.selectAll('.dot').on('mouseover', function(d){ // 點的tooltips
 		var x = d3.select(this).attr('transform').split("(")[1].split(",")[0];
 		var y = d3.select(this).attr('transform').split("(")[1].split(",")[1].split(")")[0];
 		var xPos = parseFloat(x) + 10; //截取點的位置
