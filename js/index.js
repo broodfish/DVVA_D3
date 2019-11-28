@@ -81,7 +81,9 @@ d3.csv(data_dir, function(data){
 			.attr('d', linePath(filter(i)))
 			.attr('fill', 'none')
 			.attr('stroke-width', 1.5)
-			.attr('stroke', function(d) { return color_scale(countryname[i]);});
+			.attr('stroke', function(d) { return color_scale(countryname[i]);})
+			.attr('opacity', 0)
+			.transition().ease(d3.easeLinear).duration(1000).attr('opacity', 1);
 		i += 1;
 	}
 	
@@ -96,7 +98,9 @@ d3.csv(data_dir, function(data){
 		})
 		.attr('class', 'dot')
 		.attr('id', function(d) { return d.country;})
-		.style("fill", function(d) { return color_scale(d.country);});
+		.style("fill", function(d) { return color_scale(d.country);})
+		.attr('opacity', 0)
+		.transition().ease(d3.easeLinear).duration(1000).attr('opacity', 1);
 		
 	showTips = function(i, d){ //這部分是要作為Hover用的資料
 		var html = '' 
@@ -122,7 +126,7 @@ d3.csv(data_dir, function(data){
 		d3.select('#tooltip').classed('hidden', true); //補回剛剛的Class
 	});	
 	
-	for (i = 0; i < countryname.length; i++){ //colo legend
+	for (i = 0; i < countryname.length; i++){ //color legend
 		d3.select(".color_legend") //顏色方塊
 			.attr('overflow','visible')
 			.append("svg")
