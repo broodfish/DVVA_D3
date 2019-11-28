@@ -145,7 +145,7 @@ d3.csv(data_dir, function(data){
 	}
 	
 	d3.selectAll('.color_bar').on('mouseover', function(d){ 
-		id = d3.select(this).attr('id')
+		id = d3.select(this).attr('id');
 		name = d3.select(this).attr('id').split("_")[1];
 		d3.select('#'+id+' .text').attr('fill','red');
 		d3.selectAll('.line-path#'+name)
@@ -163,11 +163,20 @@ d3.csv(data_dir, function(data){
 			.attr('r', 2.5);
 	});
 	
-	d3.selectAll('.checkbox').on('click', function(d){
-		if (d3.select(this).classed("checked") == false)
-			d3.select(this).classed("checked", true);
-		else
-			d3.select(this).classed("checked", false);
+	d3.selectAll('.color_bar').on('click', function(d){
+		id = d3.select(this).attr('id')
+		cbname = '#'+id+' .checkbox';
+		name = d3.select(this).attr('id').split("_")[1];
+		if (d3.select(cbname).classed("checked") == false) {
+			d3.select(cbname).classed("checked", true);
+			d3.select('.line-path#'+name).attr('opacity', 0);
+			d3.selectAll('.dot#'+name).attr('opacity', 0);
+		}
+		else {
+			d3.select(cbname).classed("checked", false);
+			d3.select('.line-path#'+name).attr('opacity', 1);
+			d3.selectAll('.dot#'+name).attr('opacity', 1);
+		}
 	});
 
 });
