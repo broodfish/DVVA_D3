@@ -1,7 +1,8 @@
 # DVVA_D3
 DVVA D3 Assignment
+###### tags:`D3.js`, `折線圖`
 ## Goal
-利用D3js呈現各歷年縣市人口差資料
+利用D3.js呈現各歷年縣市人口差資料
 ## Data source
 縣市人口統計.csv
 ## Requirement
